@@ -1,12 +1,15 @@
 import { useState } from 'react'
-import Navbar from './Components/Navbar'
-import Header from './Components/Header'
-function App() {
+import Home from './Components/Home'
+import { Routes, Route } from "react-router-dom"
+import Lists from './Components/Lists.jsx'
 
+function App() {
   return (
     <>
-      <Navbar />
-      <Header />
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path='/hotels' element={<Lists />} />
+      </Routes>
     </>
   )
 }
