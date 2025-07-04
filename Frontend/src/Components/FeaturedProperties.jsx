@@ -9,7 +9,7 @@ const FeaturedProperties = () => {
                 sx={{ width: "100%", height: 400, margin: "2rem 0px" }}
                 cols={4}
                 gap={0}
-                rowHeight={380}>
+                rowHeight={400}>
                 {itemData.map((item) => (
                     <ImageListItem key={item.img} sx={{ gap: "0.2rem", display: 'flex', flexDirection: 'column', justifyContent: "space-between" }}>
                         <Box className="w-full px-2 h-full overflow-hidden rounded-2xl">

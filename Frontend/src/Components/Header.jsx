@@ -51,7 +51,7 @@ export default function Header({ type }) {
         }
     )
     const handleSearch = () => {
-        navigate("/hotels", {state: {destination, date, options}})
+        navigate("/hotels", { state: { destination, date, options } })
     }
     const [openOptions, setOpenOptions] = useState(false)
     const handleOption = (name, operation) => {
@@ -90,9 +90,14 @@ export default function Header({ type }) {
                     <Stack className='justify-center items-center'>
                         <Stack direction="row" className='bg-[#ecf39e] rounded top-8 relative w-[80%] items-center justify-center p-1 border-[#90a955] border-4' spacing={3}>
                             <Item style={{ display: "flex", justifyContent: "center", width: "30%", fontSize: "1rem", boxShadow: "none", height: "100%", color: "#132a13", alignItems: "center", gap: "16px", backgroundColor: "transparent" }}><HotelIcon /><TextField variant='standard' onChange={e => setDestination(e.target.value)} className='border-none' placeholder='Where are you going?' /></Item>
-                            <Item className='relative' style={{ backgroundColor: "transparent", width: "30%", fontSize: "0.9rem", boxShadow: "none", height: "100%", color: "#132a13", cursor: "pointer" }} onClick={() => { setOpenDate(!openDate) }}><CalendarMonthIcon className='mx-4' />{`${format(date[0].startDate, "dd/MM/yyyy")} to ${format(date[0].endDate, "dd/MM/yyyy")}`}
+                            <Item className='relative' style={{ backgroundColor: "transparent", width: "30%", fontSize: "0.9rem", boxShadow: "none", height: "100%", color: "#132a13", cursor: "pointer" }} onClick={() => {
+                                setOpenDate(!openDate)
+                                if (openDate) {
+                                    setOpenOptions(false)
+                                }
+                            }}><CalendarMonthIcon className='mx-4' />{`${format(date[0].startDate, "dd/MM/yyyy")} to ${format(date[0].endDate, "dd/MM/yyyy")}`}
                                 {openDate && <DateRangePicker
-                                    className='dateRange'
+                                    className='dateRange z-10'
                                     onChange={item => setDate([item.selection])}
                                     showSelectionPreview={true}
                                     moveRangeOnFirstSelection={false}
@@ -100,8 +105,10 @@ export default function Header({ type }) {
                                     ranges={date}
                                 />}
                             </Item>
-                            <Item onClick={() => { setOpenOptions(!openOptions) }} style={{ position: "relative", backgroundColor: "transparent", fontSize: "0.9rem", cursor: "pointer", width: "30%", boxShadow: "none", height: "100%", color: "#132a13" }}><GroupIcon className='mx-4' />{`${options.adult} Adult ${options.children} Children  ${options.room} Room`}</Item>
-                            {openOptions && <Box className='absolute top-[65px] flex flex-col justify-center items-center gap-4 bg-[#4f772d] text-[#ecf39e] p-2 border-[#90a955] border-2 right-[320px]'>
+                            <Item onClick={() => {
+                                setOpenOptions(!openOptions)
+                            }} style={{ position: "relative", backgroundColor: "transparent", fontSize: "0.9rem", cursor: "pointer", width: "30%", boxShadow: "none", height: "100%", color: "#132a13" }}><GroupIcon className='mx-4' />{`${options.adult} Adult ${options.children} Children  ${options.room} Room`}</Item>
+                            {openOptions && <Box className='absolute z-10 top-[65px] flex flex-col justify-center items-center gap-4 bg-[#4f772d] text-[#ecf39e] p-2 border-[#90a955] border-2 right-[320px]'>
                                 <Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={"10px"}>
                                     <Button disabled={options.adult <= 1} variant="contained" style={{ backgroundColor: "#132a13" }} onClick={() => handleOption("adult", "d")}>-</Button>
                                     <Typography>{options.adult}</Typography>

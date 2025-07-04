@@ -9,12 +9,12 @@ export default function PropertyList() {
         <ImageList
             sx={{ width: "100%", height: 225, margin: "2rem 0px" }}
             cols={5}
-            gap={10}
+            gap={1}
             rowHeight={225}>
             {itemData.map((item) => (
-                <ImageListItem key={item.img} sx={{ display: 'flex',alignItems: "flex-start", flexDirection: 'column', justifyContent: "space-between" }}>
+                <ImageListItem key={item.img} sx={{ display: 'flex', alignItems: "flex-start", flexDirection: 'column', justifyContent: "space-between" }}>
                     {/* Image Container with fixed size */}
-                    <Box className="w-[11rem] h-[11rem] overflow-hidden rounded-xl">
+                    <Box className="w-full h-[11rem] px-2 overflow-hidden rounded-xl">
                         <img
                             src={item.img}
                             alt={item.title}
