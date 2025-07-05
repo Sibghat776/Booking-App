@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Home from './Components/Home'
 import { Routes, Route } from "react-router-dom"
 import Lists from './Components/Lists.jsx'
+import Hotel from './Components/Hotel.jsx'
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Routes>
         <Route index element={<Home />} />
         <Route path='/hotels' element={<Lists />} />
+        <Route path='/hotel' element={<Hotel />} />
       </Routes>
     </>
   )

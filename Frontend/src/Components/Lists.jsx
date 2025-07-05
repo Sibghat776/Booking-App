@@ -5,6 +5,8 @@ import { useLocation } from 'react-router-dom'
 import { Box, Button, Stack, TextField, Typography } from "@mui/material"
 import "./list.css"
 import { format } from 'date-fns'
+import EmailList from "./EmailList"
+import Footer from "./Footer"
 
 const Lists = () => {
     let location = useLocation()
@@ -109,7 +111,7 @@ const Lists = () => {
                             <Typography className="text-sm bold font-bold text-green-700 mt-2">
                                 Free cancellation
                             </Typography>
-                            <Typography className="text-sm text-green-700">
+                            <Typography className="small text-sm small text-green-700">
                                 You can cancel later, so lock in this great price today!
                             </Typography>
                         </Box>
@@ -174,7 +176,7 @@ const Lists = () => {
                             <Typography className="text-sm bold font-bold text-green-700 mt-2">
                                 Free cancellation
                             </Typography>
-                            <Typography className="text-sm text-green-700">
+                            <Typography className="small text-sm text-green-700">
                                 You can cancel later, so lock in this great price today!
                             </Typography>
                         </Box>
@@ -239,7 +241,7 @@ const Lists = () => {
                             <Typography className="text-sm bold font-bold text-green-700 mt-2">
                                 Free cancellation
                             </Typography>
-                            <Typography className="text-sm text-green-700">
+                            <Typography className="small text-sm text-green-700">
                                 You can cancel later, so lock in this great price today!
                             </Typography>
                         </Box>
@@ -304,7 +306,7 @@ const Lists = () => {
                             <Typography className="text-sm bold font-bold text-green-700 mt-2">
                                 Free cancellation
                             </Typography>
-                            <Typography className="text-sm text-green-700">
+                            <Typography className="small text-sm text-green-700">
                                 You can cancel later, so lock in this great price today!
                             </Typography>
                         </Box>
@@ -369,7 +371,7 @@ const Lists = () => {
                             <Typography className="text-sm bold font-bold text-green-700 mt-2">
                                 Free cancellation
                             </Typography>
-                            <Typography className="text-sm text-green-700">
+                            <Typography className="small text-sm text-green-700">
                                 You can cancel later, so lock in this great price today!
                             </Typography>
                         </Box>
@@ -388,7 +390,7 @@ const Lists = () => {
                             </Button>
                         </Box>
                     </Box>
-                    <Box className="relative mb-2 bg-white flex flex-col md:flex-row rounded-xl shadow-2xl gap-4 w-full p-4">
+                    <Box className="relative mb-0 bg-white flex flex-col md:flex-row rounded-xl shadow-2xl gap-4 w-full p-4">
 
                         {/* Rating Box — Fixed at Card's Top-Right Corner */}
                         <Box className="absolute top-4 right-4 flex items-center gap-2 z-10">
@@ -434,7 +436,7 @@ const Lists = () => {
                             <Typography className="text-sm bold font-bold text-green-700 mt-2">
                                 Free cancellation
                             </Typography>
-                            <Typography className="text-sm text-green-700">
+                            <Typography className="small text-sm text-green-700">
                                 You can cancel later, so lock in this great price today!
                             </Typography>
                         </Box>
@@ -455,6 +457,8 @@ const Lists = () => {
                     </Box>
                 </Box>
             </Stack>
+            <EmailList />
+            <Footer />
         </>
     )
 }

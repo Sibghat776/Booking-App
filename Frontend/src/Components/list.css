@@ -17,6 +17,7 @@
     flex-direction: row !important;
     flex-wrap: wrap;
     padding: 1% 8%;
+    margin-bottom: 1%;
 }
 
 .destinationInput {
@@ -61,5 +62,5 @@
     padding: 0.2rem  0.8rem !important;
 }
 .small {
-    font-size: smaller !important;
+    font-size: small !important;
 }
