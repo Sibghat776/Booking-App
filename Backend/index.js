@@ -6,6 +6,7 @@ import hotelsRoute from "./Routes/hotels.js"
 import roomsRoute from "./Routes/rooms.js"
 import usersRoute from "./Routes/users.js"
 import cookieParser from "cookie-parser"
+import cors from "cors"
 
 Dotenv.config()
 let app = express()
@@ -14,13 +15,14 @@ app.listen(5000, () => {
     console.log("Server is running on Port Number: 5000")
 })
 
+app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
 
-app.use("/auth", authRoute)
-app.use("/hotels", hotelsRoute)
-app.use("/rooms", roomsRoute)
-app.use("/users", usersRoute)
+app.use("/api/auth", authRoute)
+app.use("/api/hotels", hotelsRoute)
+app.use("/api/rooms", roomsRoute)
+app.use("/api/users", usersRoute)
 
 app.use((err, req, res, next) => {
     let errorStatus = err.status || 500

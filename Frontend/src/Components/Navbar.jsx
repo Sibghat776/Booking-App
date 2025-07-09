@@ -8,7 +8,7 @@ const Navbar = () => {
         <nav className="bg-[#132a13] border-gray-200">
             <div className="max-w-screen-xl mx-[10%] flex flex-wrap items-center justify-between px-4 py-4">
                 {/* Logo + Title */}
-                <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
+                <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src={Logo} className="h-10 rounded-full" alt="Booking App Logo" />
                     <span className="text-2xl font-semibold whitespace-nowrap text-[#F7FFF4]">
                         Booking App

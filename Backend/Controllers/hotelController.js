@@ -17,10 +17,61 @@ export let updateHotel = async (req, res, next) => {
         next(error)
     }
 }
+
 export let getHotels = async (req, res, next) => {
+    let { min, max, limit, featured, ...others } = req.query;
+
+    if (featured !== undefined) {
+        featured = featured === 'true';
+    }
+
+    const minPrice = min ? parseInt(min) : 1;
+    const maxPrice = max ? parseInt(max) : 9999;
+    const limitVal = limit ? parseInt(limit) : 0;
+
     try {
-        let allHotels = await Hotels.find(req.body)
-        res.status(200).json(allHotels)
+        console.log({ featured, minPrice, maxPrice, limitVal, others });
+
+        const allHotels = await Hotels.find({
+            ...others,
+            ...(featured !== undefined && { featured }),
+            price: {
+                $gte: minPrice,
+                $lte: maxPrice
+            }
+        }).limit(limitVal);
+
+        res.status(200).json(allHotels);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export let countByCity = async (req, res, next) => {
+    let cities = req.query.cities.split(",")
+    try {
+        let list = await Promise.all(cities.map(city => {
+            return Hotels.countDocuments({ city: city })
+        }))
+        res.status(200).json(list)
+    } catch (error) {
+        next(error)
+    }
+}
+export let countByType = async (req, res, next) => {
+    try {
+        let hotelCount = await Hotels.countDocuments({ type: "hotel" })
+        let appartmentCount = await Hotels.countDocuments({ type: "appartment" })
+        let resortCount = await Hotels.countDocuments({ type: "resort" })
+        let villaCount = await Hotels.countDocuments({ type: "villa" })
+        let cabinCount = await Hotels.countDocuments({ type: "cabin" })
+        res.status(200).json([
+            { type: "hotel", count: hotelCount },
+            { type: "appartment", count: appartmentCount },
+            { type: "resorts", count: resortCount },
+            { type: "villa", count: villaCount },
+            { type: "cabin", count: cabinCount },
+        ])
     } catch (error) {
         next(error)
     }

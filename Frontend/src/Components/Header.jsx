@@ -1,4 +1,4 @@
-import react, { Children } from 'react';
+import react, { Children, useContext } from 'react';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
@@ -19,6 +19,8 @@ import { format } from 'date-fns';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import GroupIcon from '@mui/icons-material/Group';
 import { useNavigate } from 'react-router-dom';
+import "./header.css"
+import { SearchContext } from '../Context/contextApi';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: '#fff',
@@ -35,7 +37,7 @@ export default function Header({ type }) {
     let [openDate, setOpenDate] = useState(false)
     let [destination, setDestination] = useState("")
     let navigate = useNavigate()
-
+    const {dispatch} = useContext(SearchContext)
     const [date, setDate] = useState([
         {
             startDate: new Date(),
@@ -51,6 +53,7 @@ export default function Header({ type }) {
         }
     )
     const handleSearch = () => {
+        dispatch({type: "NEW_SEARCH", payload: {destination, date, options}})
         navigate("/hotels", { state: { destination, date, options } })
     }
     const [openOptions, setOpenOptions] = useState(false)
@@ -97,13 +100,20 @@ export default function Header({ type }) {
                                 }
                             }}><CalendarMonthIcon className='mx-4' />{`${format(date[0].startDate, "dd/MM/yyyy")} to ${format(date[0].endDate, "dd/MM/yyyy")}`}
                                 {openDate && <DateRangePicker
-                                    className='dateRange z-10'
+                                    className="dateRange z-10 no-sidebar"
                                     onChange={item => setDate([item.selection])}
                                     showSelectionPreview={true}
-                                    moveRangeOnFirstSelection={false}
+                                    moveRangeOnFirstSelection={true}
                                     months={1}
                                     ranges={date}
-                                />}
+                                    minDate={new Date()}
+                                    showDateDisplay={true}
+                                    staticRanges={[]}
+                                    inputRanges={[]}
+                                    direction="horizontal"
+                                />
+
+                                }
                             </Item>
                             <Item onClick={() => {
                                 setOpenOptions(!openOptions)
