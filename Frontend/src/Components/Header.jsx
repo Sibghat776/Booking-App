@@ -21,6 +21,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import { useNavigate } from 'react-router-dom';
 import "./header.css"
 import { SearchContext } from '../Context/contextApi';
+import { AuthContext } from '../Context/Auth';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: '#fff',
@@ -37,7 +38,9 @@ export default function Header({ type }) {
     let [openDate, setOpenDate] = useState(false)
     let [destination, setDestination] = useState("")
     let navigate = useNavigate()
-    const {dispatch} = useContext(SearchContext)
+    const { dispatch } = useContext(SearchContext)
+    const { user } = useContext(AuthContext)
+
     const [date, setDate] = useState([
         {
             startDate: new Date(),
@@ -53,7 +56,7 @@ export default function Header({ type }) {
         }
     )
     const handleSearch = () => {
-        dispatch({type: "NEW_SEARCH", payload: {destination, date, options}})
+        dispatch({ type: "NEW_SEARCH", payload: { destination, date, options } })
         navigate("/hotels", { state: { destination, date, options } })
     }
     const [openOptions, setOpenOptions] = useState(false)
@@ -88,8 +91,7 @@ export default function Header({ type }) {
                     <Typography variant="p" color='#F7FFF4' paddingX={"160px"} paddingBottom={"10px"} component="p">
                         Get rewarded fro your travels - unlock instant savings of 10% or more with a free Sibghat booking account.
                     </Typography>
-                    <Button variant="contained" style={{ backgroundColor: "#31572c", margin: "20px 160px" }}>Sign in / Register</Button>
-
+                    {!user && <Button variant="contained" style={{ backgroundColor: "#31572c", margin: "20px 160px" }}>Sign in / Register</Button>}
                     <Stack className='justify-center items-center'>
                         <Stack direction="row" className='bg-[#ecf39e] rounded top-8 relative w-[80%] items-center justify-center p-1 border-[#90a955] border-4' spacing={3}>
                             <Item style={{ display: "flex", justifyContent: "center", width: "30%", fontSize: "1rem", boxShadow: "none", height: "100%", color: "#132a13", alignItems: "center", gap: "16px", backgroundColor: "transparent" }}><HotelIcon /><TextField variant='standard' onChange={e => setDestination(e.target.value)} className='border-none' placeholder='Where are you going?' /></Item>

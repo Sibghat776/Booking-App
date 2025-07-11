@@ -1,9 +1,10 @@
 import Logo from "../assets/Logo.png"
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../Context/Auth";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-
+    const { user } = useContext(AuthContext)
     return (
         <nav className="bg-[#132a13] border-gray-200">
             <div className="max-w-screen-xl mx-[10%] flex flex-wrap items-center justify-between px-4 py-4">
@@ -49,7 +50,9 @@ const Navbar = () => {
                 </button>
 
                 {/* Navigation Links */}
-                <div
+                {user ? <span className="text-xl capitalize font-semibold whitespace-nowrap text-[#F7FFF4]">
+                        {user.username}
+                    </span> : <div
                     className={`${isOpen ? "block" : "hidden"
                         } w-full md:block md:w-auto`}
                     id="navbar-default"
@@ -65,14 +68,14 @@ const Navbar = () => {
                         </li>
                         <li>
                             <a
-                                href="#"
+                                href="/login"
                                 className="block py-2 px-3 text-[#F7FFF4] hover:text-white"
                             >
                                 Login
                             </a>
                         </li>
                     </ul>
-                </div>
+                </div>}
             </div>
         </nav>
     );

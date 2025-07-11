@@ -1,5 +1,5 @@
 import express from "express";
-import { createHotel, deleteHotel, updateHotel, getHotel, getHotels, countByCity, countByType } from "../Controllers/hotelController.js";
+import { createHotel, deleteHotel, updateHotel, getHotel, getHotels, countByCity, countByType, getHotelRooms } from "../Controllers/hotelController.js";
 import { verifyAdmin } from "../utils/verifyToken.js";
 
 let route = express.Router()
@@ -17,6 +17,7 @@ route.get("/find/:id", getHotel)
 route.get("/", getHotels)
 route.get("/countByCity", countByCity)
 route.get("/countByType", countByType)
+route.get("/room/:id", getHotelRooms)
 
 // DELETE
 route.delete("/:id", verifyAdmin, deleteHotel)

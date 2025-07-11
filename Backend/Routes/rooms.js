@@ -1,5 +1,5 @@
 import express from "express";
-import { createRoom, deleteRoom, getRoom, getRooms, updateRoom } from "../Controllers/roomsController.js";
+import { createRoom, deleteRoom, getRoom, getRooms, updateRoom, updateRoomAvailability } from "../Controllers/roomsController.js";
 import { verifyAdmin } from "../utils/verifyToken.js";
 
 let route = express.Router()
@@ -9,6 +9,7 @@ route.post("/:hotelId", verifyAdmin, createRoom)
 
 // UPDATE
 route.put("/:id", verifyAdmin, updateRoom)
+route.put("/availability/:id", updateRoomAvailability)
 
 // GETONE
 route.get("/:id", getRoom)

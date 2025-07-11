@@ -13,10 +13,12 @@
     "autoprefixer": "^10.4.21",
     "date-fns": "^4.1.0",
     "flowbite": "^3.1.2",
+    "framer-motion": "^12.23.1",
     "react": "^19.1.0",
     "react-date-range": "^2.0.1",
     "react-dom": "^19.1.0",
-    "react-router-dom": "^7.6.3"
+    "react-router-dom": "^7.6.3",
+    "react-toastify": "^11.0.5"
   },
   "devDependencies": {
     "@emotion/react": "^11.14.0",

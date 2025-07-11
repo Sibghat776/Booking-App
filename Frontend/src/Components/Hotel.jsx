@@ -9,28 +9,29 @@ import EmailList from "./EmailList"
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import useFetch from "../Hooks/useFetch"
 import { SearchContext } from '../Context/contextApi'
+import { AuthContext } from '../Context/Auth'
+import Reserve from './reserve'
 
 const Hotel = () => {
-    const { date } = useContext(SearchContext)
-    console.log(date, "dates")
-
+    const { date, options } = useContext(SearchContext)
+    const { user } = useContext(AuthContext)
     const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24
     function dayDifference(date1, date2) {
         const timeDiff = Math.abs(date2.getTime() - date1.getTime())
         const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY)
         return diffDays
     }
-
+    const [openModal, setOpenModal] = useState(false)
     const days = dayDifference(date[0].endDate, date[0].startDate)
-
+    const navigate = useNavigate()
     const location = useLocation()
     let path = location.pathname.split("/")
     let id = path[2]
     const { data, loading, error } = useFetch(`http://localhost:5000/api/hotels/find/${id}`)
-    let [slideNumber, setSlideNumber] = useState(0)
+    let [slideNumber, setSlideNumber] = useState(0);
     let [open, setOpen] = useState(false)
 
     let handleOpen = (i) => {
@@ -45,6 +46,13 @@ const Hotel = () => {
             newSlideNumber = slideNumber === 5 ? 0 : slideNumber + 1
         }
         setSlideNumber(newSlideNumber)
+    }
+    const handleClick = () => {
+        if (!user) {
+            navigate("/login")
+        } else {
+            setOpenModal(true)
+        }
     }
     return (
         <>
@@ -73,6 +81,7 @@ const Hotel = () => {
                             <Button
                                 variant="contained"
                                 className="!bg-[#31572c] !text-white !font-semibold normal-case !text-sm"
+                                onClick={handleClick}
                             >
                                 Reserve or Book Now!
                             </Button>
@@ -99,17 +108,18 @@ const Hotel = () => {
                                 {/* RIGHT SIDE - Offer Box */}
                                 <Box className="bg-[#faffc9] h-[15rem] md:w-[30%] rounded-lg p-4 flex flex-col justify-between">
                                     <Typography variant="h6" className="font-bold bold text-gray-800 mb-2">
-                                        Perfect for a 9-night stay!
+                                        Perfect for a {days}-night stay!
                                     </Typography>
                                     <Typography variant="body2" className="text-gray-700">
                                         Located in the real heart of Krakow, this property has an excellent location score of 9.8!
                                     </Typography>
                                     <Typography variant="h6" className="font-bold text-gray-900 mb-2">
-                                        $945 <span className="text-sm font-normal">(9 nights)</span>
+                                        ${days * data.price * options.room} <span className="text-4xl font-thin">({days} nights)</span>
                                     </Typography>
                                     <Button
                                         variant="contained"
                                         className="!bg-[#31572c] !text-white !font-semibold normal-case !text-sm"
+                                        onClick={handleClick}
                                     >
                                         Reserve or Book Now!
                                     </Button>
@@ -120,6 +130,7 @@ const Hotel = () => {
             </Box>
             <EmailList />
             <Footer />
+            {openModal && <Reserve setOpenModal={setOpenModal} hotelId={id} />}
         </>
     )
 }

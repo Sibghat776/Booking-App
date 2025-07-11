@@ -1,4 +1,5 @@
 import Hotels from "../Models/Hotels.js"
+import Room from "../Models/Rooms.js"
 
 export let createHotel = async (req, res, next) => {
     let newHotel = new Hotels(req.body)
@@ -9,6 +10,7 @@ export let createHotel = async (req, res, next) => {
         next(error)
     }
 }
+
 export let updateHotel = async (req, res, next) => {
     try {
         let updatedHotel = await Hotels.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
@@ -58,6 +60,7 @@ export let countByCity = async (req, res, next) => {
         next(error)
     }
 }
+
 export let countByType = async (req, res, next) => {
     try {
         let hotelCount = await Hotels.countDocuments({ type: "hotel" })
@@ -76,6 +79,7 @@ export let countByType = async (req, res, next) => {
         next(error)
     }
 }
+
 export let getHotel = async (req, res, next) => {
     try {
         let oneHotel = await Hotels.findById(req.params.id)
@@ -84,11 +88,24 @@ export let getHotel = async (req, res, next) => {
         next(error)
     }
 }
+
 export let deleteHotel = async (req, res, next) => {
     try {
         await Hotels.findByIdAndDelete(req.params.id)
         res.status(200).json("Hotel has been deleted")
     } catch (error) {
         res.status(500).json(error)
+    }
+}
+
+export const getHotelRooms = async (req, res, next) => {
+    try {
+        const hotel = await Hotels.findById(req.params.id)
+        const list = await Promise.all(hotel.rooms.map((room) => {
+            return Room.findById(room)
+        }))
+        res.status(200).json(list)
+    } catch (error) {
+        next(error)
     }
 }

@@ -28,6 +28,20 @@ export let updateRoom = async (req, res, next) => {
         next(error)
     }
 }
+export let updateRoomAvailability = async (req, res, next) => {
+    try {
+        await Rooms.updateOne({ "roomNumbers._id": req.params.id },
+            {
+                $push: {
+                    "roomNumbers.$.unavailableDates": req.body.dates
+                }
+            }
+        )
+        res.status(200).json("Room Status has been updated")
+    } catch (error) {
+        next(error)
+    }
+}
 export let getRooms = async (req, res, next) => {
     try {
         let allRooms = await Rooms.find(req.body)
