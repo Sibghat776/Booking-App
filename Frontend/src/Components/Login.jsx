@@ -19,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext, AuthContextProvider } from "../Context/Auth"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { showToast } from '../showToast';
 
 const LoginCard = styled(Paper)(() => ({
     padding: '2.5rem',
@@ -42,15 +43,7 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         if (!credentials.username || !credentials.password) {
-            toast.error('Missing Feilds!', {
-                position: 'top-right',
-                autoClose: 2500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                theme: 'dark',
-            })
+            showToast("Missing Fields!", "error", "dark")
             return;
         }
         e.preventDefault()
@@ -58,32 +51,14 @@ const Login = () => {
         try {
             const res = await axios.post("http://localhost:5000/api/auth/login", credentials)
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data })
-            console.log("Login success")
-            toast.success('Login successful!', {
-                position: 'top-right',
-                autoClose: 2500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                theme: 'light',
-            });
+            showToast("Login Successfully", "success", "light")
             navigate("/")
         } catch (error) {
             dispatch({ type: "LOGIN_FAILURE", payload: error.response.data })
-            toast.error('Wrong Credentials!', {
-                position: 'top-right',
-                autoClose: 2500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                theme: 'dark',
-            });
+            showToast("Wrong Credentials", "error", "dark")
         }
     };
 
-    console.log(user)
 
     const handleChange = (e) => {
         setCredentials((prev) => (
@@ -93,11 +68,7 @@ const Login = () => {
 
     return (
         <Box
-            className="min-h-screen flex items-center justify-center"
-            style={{
-                background: "linear-gradient(135deg, #132a13 0%, #31572c 100%)",
-                padding: "2rem"
-            }}
+            className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-green-700 flex items-center justify-center"
         >
             <ToastContainer />
             <motion.div

@@ -13,7 +13,7 @@ import {
     ChatBubbleOutline,
     WorkOutline,
     Report,
-    PersonAdd,
+    PersonAdd
 } from "@mui/icons-material";
 
 const Sidebar = () => {

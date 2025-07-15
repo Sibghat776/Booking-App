@@ -16,12 +16,16 @@ const FeaturedProperties = () => {
                     {data.map((data, i) => (
                         <ImageListItem key={data.photos + i} sx={{ gap: "0.2rem", display: 'flex', flexDirection: 'column', justifyContent: "space-between" }}>
                             <Box className="w-full px-2 h-full overflow-hidden rounded-2xl">
-                                <img
-                                    src={data.photos[0]}
-                                    alt={data.name}
-                                    loading="lazy"
-                                    className="w-full h-full p-0 object-cover"
-                                />
+                                {img.map((img, i) => (
+                                    <img
+                                        key={i}
+                                        src={img}
+                                        alt={data.name}
+                                        loading="lazy"
+                                        className="w-full h-full p-0 object-cover"
+                                    />
+                                ))
+                                }
                             </Box>
                             <Typography
                                 variant="h6"
@@ -54,3 +58,6 @@ const FeaturedProperties = () => {
 }
 
 export default FeaturedProperties
+let img = [
+    "https://images.pexels.com/photos/31739395/pexels-photo-31739395.jpeg"
+]

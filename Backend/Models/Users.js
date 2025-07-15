@@ -19,6 +19,6 @@ let UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
-}, { Timestamp: true })
+}, { timestamps: true })
 
 export default mongoose.model("User", UserSchema)

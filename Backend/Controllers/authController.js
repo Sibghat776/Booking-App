@@ -12,8 +12,13 @@ export let register = async (req, res, next) => {
             email: req.body.email,
             password: hash
         })
+
+        let existingUser = await Users.findOne({ username: req.body.username })
+        if (existingUser) {
+            return res.status(400).json("Username already taken!")
+        }
         await newUser.save()
-        res.status(200).json("User Registered successfully")
+        res.status(200).json(newUser)
     } catch (error) {
         next(error)
     }

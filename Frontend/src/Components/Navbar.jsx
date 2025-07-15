@@ -60,7 +60,7 @@ const Navbar = () => {
                     <ul className="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 font-medium">
                         <li>
                             <a
-                                href="#"
+                                href="/register"
                                 className="block py-2 px-3 text-[#F7FFF4] hover:text-white"
                             >
                                 Register
